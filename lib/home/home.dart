@@ -1,75 +1,61 @@
 import 'package:flutter/material.dart';
 
+import '../utils/BottonNavigator.dart';
+import 'home_all.dart';
+
 class Home extends StatefulWidget {
-  const Home({super.key});
+  const Home({
+    super.key,
+    required this.restorationId,
+  });
+
+  final String restorationId;
 
   @override
   State<Home> createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends State<Home> with RestorationMixin {
+  final RestorableInt _currentIndex = RestorableInt(0);
+
+  @override
+  String get restorationId => widget.restorationId;
+
+  @override
+  void restoreState(RestorationBucket? oldBucket, bool initialRestore) {
+    registerForRestoration(_currentIndex, 'bottom_navigation_tab_index');
+  }
+
+  @override
+  void dispose() {
+    _currentIndex.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    var textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            Image.network(
-              "https://images.unsplash.com/photo-1537202108838-e7072bad1927",
-              fit: BoxFit.cover,
-            ),
-            Positioned(
-              left: 20,
-              bottom: 20,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
-                    "Gestión del Conocimiento",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    "MGETI-15: Fraternidad Ford",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
+      body: const HomeAll(),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.blue,
-        selectedItemColor: Colors.blue[800],
-        unselectedItemColor: Colors.blue[400],
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.category_sharp), label: "Categorías"),
-          BottomNavigationBarItem(icon: Icon(Icons.list_alt), label: "Temas"),
-          BottomNavigationBarItem(icon: Icon(Icons.help), label: "Acerca de"),
-        ],
+        type: BottomNavigationBarType.fixed,
+        selectedFontSize: textTheme.caption!.fontSize!,
+        unselectedFontSize: textTheme.caption!.fontSize!,
+        currentIndex: _currentIndex.value,
+        onTap: (index) {
+          setState(() {
+            if(index==1){
+              Navigator.pushNamed(context, "/second");
+              _currentIndex.value = index;
+            }
+          });
+        },
+        backgroundColor: Colors.black45,
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.white54,
+        items: navigatorList,
       ),
     );
-
-    //   child: Container(
-    //     decoration: const BoxDecoration(
-    //       image: DecorationImage(
-    //         image: NetworkImage("https://images.unsplash.com/photo-1537202108838-e7072bad1927"),
-    //         fit: BoxFit.cover,
-    //       )
-    //     ),
-    //   ),
-    // ),
   }
 }

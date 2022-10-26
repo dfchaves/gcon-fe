@@ -1,14 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:gcon_fe/categories/categories_item.dart';
 
-class Categories extends StatelessWidget {
-  const Categories({super.key});
+import '../utils/BottonNavigator.dart';
+
+class Categories extends StatefulWidget {
+  const Categories({
+    super.key,
+    required this.restorationId,
+  });
+
+  final String restorationId;
+
+  @override
+  State<Categories> createState() => _CategoriesState();
+}
+
+class _CategoriesState extends State<Categories> with RestorationMixin {
+  final RestorableInt _currentIndex = RestorableInt(0);
+
+  @override
+  String get restorationId => widget.restorationId;
+
+  @override
+  void restoreState(RestorationBucket? oldBucket, bool initialRestore) {
+    registerForRestoration(_currentIndex, 'bottom_navigation_tab_index');
+  }
+
+  @override
+  void dispose() {
+    _currentIndex.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    var textTheme = Theme.of(context).textTheme;
+    var colorScheme = Theme.of(context).colorScheme;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Categorias'),
+        backgroundColor: Colors.black45,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -23,15 +55,22 @@ class Categories extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.blue,
-        selectedItemColor: Colors.blue[800],
-        unselectedItemColor: Colors.blue[400],
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.category_sharp), label: "Categorías"),
-          BottomNavigationBarItem(icon: Icon(Icons.list_alt), label: "Temas"),
-          BottomNavigationBarItem(icon: Icon(Icons.help), label: "Acerca de"),
-        ],
+        type: BottomNavigationBarType.fixed,
+        selectedFontSize: textTheme.caption!.fontSize!,
+        unselectedFontSize: textTheme.caption!.fontSize!,
+        currentIndex: _currentIndex.value,
+        onTap: (index) {
+          setState(() {
+            if (index == 1) {
+              Navigator.pushNamed(context, "/second");
+            }
+            _currentIndex.value = index;
+          });
+        },
+        backgroundColor: Colors.black45,
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.white54,
+        items: navigatorList,
       ),
     );
   }

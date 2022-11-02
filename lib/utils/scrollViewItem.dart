@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+
 import '../paralax/parallax.dart';
 
 @immutable
-
-class CategoriesListItem extends StatelessWidget {
-  CategoriesListItem({
+class ScrollViewItem extends StatelessWidget {
+  ScrollViewItem({
     super.key,
     required this.imageUrl,
     required this.name,
@@ -34,6 +34,7 @@ class CategoriesListItem extends StatelessWidget {
       ),
     );
   }
+
   final GlobalKey _backgroundImageKey = GlobalKey();
 
   Widget _buildParallaxBackground(BuildContext context) {
@@ -76,19 +77,25 @@ class CategoriesListItem extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            name,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
+          SizedBox(
+            width: 250,
+            child: Text(
+              name,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
-          Text(
-            subtitle,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 14,
+          SizedBox(
+            width: 300,
+            child: Text(
+              subtitle,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 14,
+              ),
             ),
           ),
         ],

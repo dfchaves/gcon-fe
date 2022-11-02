@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gcon_fe/categories/categories.dart';
+import 'package:gcon_fe/themes/themes.dart';
 import 'home/home.dart';
 
 void main() {
@@ -9,11 +10,11 @@ void main() {
       initialRoute: '/',
       routes: {
         '/': (context) => const Home(
-              restorationId: "bottom_navigation_tab_index",
+              restorationId: "home",
             ),
-        '/second': (context) => const Categories(
-              restorationId: "bottom_navigation_tab_index",
-            ),
+        '/categories': (context) => const Categories(),
+        '/themes': (context) => const Themes(),
+        '/help': (context) => const Categories(),
       },
     ),
   );

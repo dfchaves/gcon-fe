@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../utils/BottonNavigator.dart';
+import '../utils/buttonNavigator.dart';
 import 'home_all.dart';
 
 class Home extends StatefulWidget {
@@ -34,27 +34,10 @@ class _HomeState extends State<Home> with RestorationMixin {
 
   @override
   Widget build(BuildContext context) {
-    var textTheme = Theme.of(context).textTheme;
-
-    return Scaffold(
-      body: const HomeAll(),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        selectedFontSize: textTheme.caption!.fontSize!,
-        unselectedFontSize: textTheme.caption!.fontSize!,
-        currentIndex: _currentIndex.value,
-        onTap: (index) {
-          setState(() {
-            if(index==1){
-              Navigator.pushNamed(context, "/second");
-              _currentIndex.value = index;
-            }
-          });
-        },
-        backgroundColor: Colors.black45,
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.white54,
-        items: navigatorList,
+    return const Scaffold(
+      body: HomeAll(),
+      bottomNavigationBar: BottomNavBar(
+        currentIndexParam: 0,
       ),
     );
   }

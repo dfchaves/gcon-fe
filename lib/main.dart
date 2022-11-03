@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gcon_fe/categories/categories.dart';
-import 'package:gcon_fe/items/item_view.dart';
-import 'package:gcon_fe/themes/themes.dart';
-import 'package:gcon_fe/utils/video_player.dart';
+import 'themes/themes.dart';
+import 'categories/categories.dart';
+import 'features/features_view.dart';
 import 'home/home.dart';
 
 void main() {
@@ -17,7 +16,7 @@ void main() {
         '/categories': (context) => const Categories(),
         '/themes': (context) => const Themes(),
         '/help': (context) => const Categories(),
-        '/itemView': (context) => const ItemView(),
+        '/itemView': (context) => const FeaturesView(),
       },
     ),
   );

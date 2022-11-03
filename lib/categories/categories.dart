@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../controller/categories_controller.dart';
+import '../models/categories_model.dart';
 import '../utils/button_navigator.dart';
 import '../utils/scroll_viewAll.dart';
 import '../utils/item_list.dart';
@@ -14,19 +16,41 @@ class Categories extends StatefulWidget {
 
 class _CategoriesState extends State<Categories> {
 
+  late Future<List<CategoriesModel>> futureCategories;
+
+  @override
+  void initState() {
+    super.initState();
+    futureCategories = fetchCategories();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Categorias'),
-        backgroundColor: Colors.black45,
-        automaticallyImplyLeading: false,
-      ),
-      body: const ScrollViewItems(restorationId: '',currentList: itemList),
-      bottomNavigationBar: const BottomNavBar(currentIndexParam: 1,)
+        appBar: AppBar(
+          title: const Text('Categorias'),
+          backgroundColor: Colors.black45,
+          automaticallyImplyLeading: false,
+        ),
+        body: FutureBuilder<List<CategoriesModel>>(
+          future: futureCategories,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+
+              return const ScrollViewItems(
+                  restorationId: '', currentList:);
+            } else if (snapshot.hasError) {
+              return Text('${snapshot.error}');
+            }
+
+            // By default, show a loading spinner.
+            return const CircularProgressIndicator();
+          },),
+        bottomNavigationBar: const BottomNavBar(currentIndexParam: 1,)
     );
   }
 }
+
 
 const urlPrefix =
     'https://docs.flutter.dev/cookbook/img-files/effects/parallax';

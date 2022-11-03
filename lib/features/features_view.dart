@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-
 import '../utils/button_navigator.dart';
 import '../utils/scroll_view_item.dart';
 
-class ItemView extends StatefulWidget {
-  const ItemView({
+class FeaturesView extends StatefulWidget {
+  const FeaturesView({
     super.key,
   });
 
   @override
-  State<ItemView> createState() => _ItemViewState();
+  State<FeaturesView> createState() => _FeaturesViewState();
 }
 
-class _ItemViewState extends State<ItemView> {
+class _FeaturesViewState extends State<FeaturesView> {
   @override
   void dispose() {
     super.dispose();

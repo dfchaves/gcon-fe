@@ -17,18 +17,23 @@ class ScrollViewItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-      child: AspectRatio(
-        aspectRatio: 16 / 9,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(16),
-          child: Stack(
-            children: [
-              _buildParallaxBackground(context),
-              _buildGradient(),
-              _buildTitleAndSubtitle(),
-            ],
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, "/itemView");
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+        child: AspectRatio(
+          aspectRatio: 16 / 9,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(16),
+            child: Stack(
+              children: [
+                _buildParallaxBackground(context),
+                _buildGradient(),
+                _buildTitleAndSubtitle(),
+              ],
+            ),
           ),
         ),
       ),
@@ -78,7 +83,7 @@ class ScrollViewItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            width: 250,
+            width: 300,
             child: Text(
               name,
               style: const TextStyle(

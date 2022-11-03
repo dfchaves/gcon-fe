@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../utils/ScrollViewAll.dart';
-import '../utils/buttonNavigator.dart';
-import '../utils/itemList.dart';
+import '../utils/scroll_viewAll.dart';
+import '../utils/button_navigator.dart';
+import '../utils/item_list.dart';
 
 class Themes extends StatefulWidget {
   const Themes({

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../utils/buttonNavigator.dart';
+import '../utils/button_navigator.dart';
 import 'home_all.dart';
 
 class Home extends StatefulWidget {
@@ -34,9 +34,14 @@ class _HomeState extends State<Home> with RestorationMixin {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: HomeAll(),
-      bottomNavigationBar: BottomNavBar(
+    return  Scaffold(
+      appBar: AppBar(
+        title: const Text('GCon'),
+        backgroundColor: Colors.black45,
+        automaticallyImplyLeading: false,
+      ),
+      body: const HomeAll(),
+      bottomNavigationBar: const BottomNavBar(
         currentIndexParam: 0,
       ),
     );

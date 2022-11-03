@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gcon_fe/utils/scrollViewItem.dart';
+import 'package:gcon_fe/utils/scroll_view_item.dart';
 
-import 'itemList.dart';
+import 'item_list.dart';
 
 class ScrollViewItems extends StatefulWidget {
   const ScrollViewItems({

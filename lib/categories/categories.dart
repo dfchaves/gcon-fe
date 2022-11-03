@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../utils/buttonNavigator.dart';
-import '../utils/scrollViewAll.dart';
-import '../utils/itemList.dart';
+import '../utils/button_navigator.dart';
+import '../utils/scroll_viewAll.dart';
+import '../utils/item_list.dart';
 
 class Categories extends StatefulWidget {
   const Categories({

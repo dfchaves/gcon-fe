@@ -68,7 +68,7 @@ class _MembersViewState extends State<MembersView> {
           key: _backgroundImageKey,
           fit: BoxFit.cover,
           cacheWidth: 500,
-          cacheHeight: 500,
+          cacheHeight: 600,
         ),
       ],
     );

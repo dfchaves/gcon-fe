@@ -8,10 +8,12 @@ class ScrollViewItems extends StatefulWidget {
     super.key,
     required this.restorationId,
     required this.currentList,
+    required this.transitionCategories,
   });
 
   final String restorationId;
   final List<ItemsList> currentList;
+  final bool transitionCategories;
 
   @override
   State<ScrollViewItems> createState() => _ScrollViewItems();
@@ -43,6 +45,8 @@ class _ScrollViewItems extends State<ScrollViewItems> with RestorationMixin {
             children: [
               for (final item in currentList)
                 ScrollViewItem(
+                  id: item.id,
+                  transitionCategories: widget.transitionCategories,
                   imageUrl: item.imageUrl,
                   name: item.name,
                   subtitle: item.subtitle,

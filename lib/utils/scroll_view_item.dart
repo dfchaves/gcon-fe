@@ -1,25 +1,52 @@
 import 'package:flutter/material.dart';
-
+import 'package:gcon_fe/features/features_all.dart';
+import '../features/features_view.dart';
 import '../paralax/parallax.dart';
 
 @immutable
-class ScrollViewItem extends StatelessWidget {
-  ScrollViewItem({
+class ScrollViewItem extends StatefulWidget {
+  const ScrollViewItem({
     super.key,
     required this.imageUrl,
     required this.name,
     required this.subtitle,
+    required this.transitionCategories,
+    required this.id,
   });
 
   final String imageUrl;
   final String name;
   final String subtitle;
+  final bool transitionCategories;
+  final String id;
 
   @override
+  State<ScrollViewItem> createState() => _ScrollViewItemState();
+}
+
+class _ScrollViewItemState extends State<ScrollViewItem> {
+  @override
   Widget build(BuildContext context) {
+    bool transition = widget.transitionCategories;
+    String id = widget.id;
+
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, "/itemView");
+        if (transition) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Themes(id: id),
+            ),
+          );
+        } else {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => FeaturesView(id: id),
+            ),
+          );
+        }
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
@@ -51,9 +78,11 @@ class ScrollViewItem extends StatelessWidget {
       ),
       children: [
         Image.network(
-          imageUrl,
+          widget.imageUrl,
           key: _backgroundImageKey,
           fit: BoxFit.cover,
+          cacheWidth: 500,
+          cacheHeight: 500,
         ),
       ],
     );
@@ -85,7 +114,7 @@ class ScrollViewItem extends StatelessWidget {
           SizedBox(
             width: 300,
             child: Text(
-              name,
+              widget.name,
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 20,
@@ -96,7 +125,7 @@ class ScrollViewItem extends StatelessWidget {
           SizedBox(
             width: 300,
             child: Text(
-              subtitle,
+              widget.subtitle,
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 14,

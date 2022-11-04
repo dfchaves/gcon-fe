@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'themes/themes.dart';
+import 'features/features_all.dart';
 import 'categories/categories.dart';
 import 'features/features_view.dart';
 import 'home/home.dart';
@@ -14,9 +14,8 @@ void main() {
               restorationId: "home",
             ),
         '/categories': (context) => const Categories(),
-        '/themes': (context) => const Themes(),
+        '/themes': (context) => Themes(),
         '/help': (context) => const Categories(),
-        '/itemView': (context) => const FeaturesView(),
       },
     ),
   );

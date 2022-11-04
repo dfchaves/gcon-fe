@@ -1,23 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:gcon_fe/controller/features_controller.dart';
-import 'package:gcon_fe/models/features_model.dart';
+import '../models/features_model.dart';
 import '../utils/button_navigator.dart';
-import '../utils/item_list.dart';
 import '../utils/scroll_view_item.dart';
 
 class FeaturesView extends StatefulWidget {
   const FeaturesView({
     super.key,
+    required this.id,
   });
+
+  final String id;
 
   @override
   State<FeaturesView> createState() => _FeaturesViewState();
 }
 
 class _FeaturesViewState extends State<FeaturesView> {
+  late Future<FeaturesModel> futureFeatures;
+
   @override
   void initState() {
     super.initState();
+    futureFeatures = fetchUniqueFeature(widget.id);
   }
 
   @override
@@ -29,33 +34,96 @@ class _FeaturesViewState extends State<FeaturesView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Title'),
+        title: FutureBuilder<FeaturesModel>(
+            future: futureFeatures,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Text(snapshot.data!.title);
+              }
+              return Text("Gestión del Conocimiento");
+            }),
         backgroundColor: Colors.black45,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            ScrollViewItem(
-              name: "",
-              imageUrl:
-                  "https://images.unsplash.com/photo-1664575196079-9ac04582854b",
-              subtitle: "",
-            ),
-            // Padding(padding: EdgeInsets.all(0))
-            // SizedBox(
-            //   child:
-            //       Title(color: Colors.black, child: const Text("Hello World")),
-            // ),
-            const Text("Sub Title"),
-            const SizedBox.square(
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
-                child: Text(
-                    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum"),
+      body: FutureBuilder<FeaturesModel>(
+        future: futureFeatures,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            FeaturesModel finalModel = FeaturesModel(
+                id: snapshot.data!.id,
+                title: snapshot.data!.title,
+                description: snapshot.data!.description,
+                content: snapshot.data!.content,
+                image: snapshot.data!.image,
+                found: snapshot.data!.found,
+                category: snapshot.data!.category);
+            return SingleChildScrollView(
+              child: Column(
+                children: [
+                  ScrollViewItem(
+                    id: "",
+                    name: "",
+                    imageUrl: finalModel.image,
+                    subtitle: "",
+                    transitionCategories: false,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 8.0, vertical: 8.0),
+                    child: Text(
+                      finalModel.title,
+                      style: const TextStyle(
+                          color: Colors.black54,
+                          fontSize: 26,
+                          decorationStyle: TextDecorationStyle.solid),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 8.0, vertical: 8.0),
+                    child: Text(
+                      finalModel.description,
+                      style: const TextStyle(
+                        fontStyle: FontStyle.italic,
+                        color: Colors.black45,
+                        fontSize: 18,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  SizedBox.square(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 16.0, horizontal: 16.0),
+                      child: Text(finalModel.content,
+                          style: const TextStyle(
+                              color: Colors.black87, fontSize: 16),
+                          textAlign: TextAlign.justify),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 8.0, vertical: 8.0),
+                    child: Text(
+                      finalModel.found,
+                      style: const TextStyle(
+                        fontStyle: FontStyle.normal,
+                        color: Colors.blue,
+                        fontSize: 12,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ],
               ),
-            ),
-          ],
-        ),
+            );
+          }
+          // By default, show a loading spinner.
+          return const Center(
+              child: CircularProgressIndicator(
+            color: Colors.black45,
+          ));
+        },
       ),
       bottomNavigationBar: const BottomNavBar(
         currentIndexParam: 2,

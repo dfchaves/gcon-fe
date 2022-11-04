@@ -24,6 +24,7 @@ class _CategoriesState extends State<Categories> {
     futureCategories = fetchCategories();
     itemList = <ItemsList>[];
   }
+
   @override
   void dispose() {
     super.dispose();
@@ -46,9 +47,16 @@ class _CategoriesState extends State<Categories> {
               var items = snapshot.data;
               for (final i in items!) {
                 itemList.add(ItemsList(
-                    name: i.title, subtitle: i.description, imageUrl: i.image));
+                    id: i.id,
+                    name: i.title,
+                    subtitle: i.description,
+                    imageUrl: i.image));
               }
-              return ScrollViewItems(restorationId: '', currentList: itemList);
+              return ScrollViewItems(
+                restorationId: '',
+                currentList: itemList,
+                transitionCategories: true,
+              );
             }
             // By default, show a loading spinner.
             return const Center(

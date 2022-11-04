@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'features/features_all.dart';
 import 'categories/categories.dart';
-import 'features/features_view.dart';
 import 'home/home.dart';
+import 'members/members_all.dart';
 
 void main() {
   runApp(
@@ -15,7 +15,7 @@ void main() {
             ),
         '/categories': (context) => const Categories(),
         '/themes': (context) => Themes(),
-        '/help': (context) => const Categories(),
+        '/help': (context) => const Members(),
       },
     ),
   );

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gcon_fe/themes/themes.dart';
 import '../controller/categories_controller.dart';
 import '../models/categories_model.dart';
 import '../utils/button_navigator.dart';
@@ -17,11 +16,19 @@ class Categories extends StatefulWidget {
 
 class _CategoriesState extends State<Categories> {
   late Future<List<CategoriesModel>> futureCategories;
+  var itemList = <ItemsList>[];
 
   @override
   void initState() {
     super.initState();
     futureCategories = fetchCategories();
+    itemList = <ItemsList>[];
+  }
+  @override
+  void dispose() {
+    super.dispose();
+    futureCategories = [] as Future<List<CategoriesModel>>;
+    itemList.clear();
   }
 
   @override
@@ -37,16 +44,17 @@ class _CategoriesState extends State<Categories> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               var items = snapshot.data;
-              var itemList = <ItemsList>[];
               for (final i in items!) {
                 itemList.add(ItemsList(
                     name: i.title, subtitle: i.description, imageUrl: i.image));
               }
-              return ScrollViewItems(
-                  restorationId: '', currentList: itemList);
+              return ScrollViewItems(restorationId: '', currentList: itemList);
             }
             // By default, show a loading spinner.
-            return const CircularProgressIndicator();
+            return const Center(
+                child: CircularProgressIndicator(
+              color: Colors.black45,
+            ));
           },
         ),
         bottomNavigationBar: const BottomNavBar(

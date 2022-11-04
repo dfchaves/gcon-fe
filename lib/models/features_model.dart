@@ -1,4 +1,4 @@
-class Features {
+class FeaturesModel {
   final String id;
   final String title;
   final String description;
@@ -7,7 +7,7 @@ class Features {
   final String found;
   final String category;
 
-  const Features({
+  const FeaturesModel({
     required this.id,
     required this.title,
     required this.description,
@@ -17,8 +17,8 @@ class Features {
     required this.category,
   });
 
-  factory Features.fromJson(Map<String, dynamic> json) {
-    return Features(
+  factory FeaturesModel.fromJson(Map<String, dynamic> json) {
+    return FeaturesModel(
       id: json['id'],
       title: json['title'],
       description: json['description'],

@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 
+import '../controller/features_controller.dart';
+import '../models/features_model.dart';
 import '../utils/scroll_viewAll.dart';
 import '../utils/button_navigator.dart';
 import '../utils/item_list.dart';
 
 class Themes extends StatefulWidget {
+  final params;
+
   const Themes({
     super.key,
+    this.params,
   });
 
   @override
@@ -14,8 +19,21 @@ class Themes extends StatefulWidget {
 }
 
 class _ThemesState extends State<Themes> {
+  late Future<List<FeaturesModel>> futureFeatures;
+  var itemList = <ItemsList>[];
+
+  @override
+  void initState() {
+    super.initState();
+    print ('Paraamamamama ${widget.params}');
+    futureFeatures = fetchFeatures(widget.params);
+    itemList = <ItemsList>[];
+  }
+
   @override
   void dispose() {
+    futureFeatures = [] as Future<List<FeaturesModel>>;
+    itemList.clear();
     super.dispose();
   }
 
@@ -27,49 +45,28 @@ class _ThemesState extends State<Themes> {
           backgroundColor: Colors.black45,
           automaticallyImplyLeading: false,
         ),
-        body: const ScrollViewItems(restorationId: '', currentList: itemList),
+        body: FutureBuilder<List<FeaturesModel>>(
+          future: futureFeatures,
+          builder: (context, snapshot) {
+            print('Snapshot $snapshot');
+            if (snapshot.hasData) {
+              var items = snapshot.data;
+              for (final i in items!) {
+                print ('hdkjsahkjdfhkjahs $i');
+                itemList.add(ItemsList(
+                    name: i.title, subtitle: i.description, imageUrl: i.image));
+              }
+              return ScrollViewItems(restorationId: '', currentList: itemList);
+            }
+            // By default, show a loading spinner.
+            return const Center(
+                child: CircularProgressIndicator(
+                  color: Colors.black45,
+                ));
+          },
+        ),
         bottomNavigationBar: const BottomNavBar(
           currentIndexParam: 2,
         ));
   }
 }
-
-const urlPrefix =
-    'https://docs.flutter.dev/cookbook/img-files/effects/parallax';
-const itemList = [
-  ItemsList(
-    name: 'Modelos Gestión de Conocimiento 1',
-    subtitle: 'Diferentes Modelos de Gestión',
-    imageUrl: 'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f',
-  ),
-  ItemsList(
-    name: 'Modelos Gestión de Conocimiento 2',
-    subtitle: "Caracterísiticas del Conocimiento Tácito",
-    imageUrl: 'https://images.unsplash.com/photo-1523215122-26803239f41f',
-  ),
-  ItemsList(
-    name: 'Modelos Gestión de Conocimiento 3',
-    subtitle: 'Caracterísiticas del Conocimiento Explícito',
-    imageUrl: 'https://images.unsplash.com/photo-1532012197267-da84d127e765',
-  ),
-  ItemsList(
-    name: 'Modelos Gestión de Conocimiento 4',
-    subtitle: 'Switzerland',
-    imageUrl: '$urlPrefix/04-vitznau.jpg',
-  ),
-  ItemsList(
-    name: 'Modelos Gestión de Conocimiento 5',
-    subtitle: 'Indonesia',
-    imageUrl: '$urlPrefix/05-bali.jpg',
-  ),
-  ItemsList(
-    name: 'Modelos Gestión de Conocimiento 6',
-    subtitle: 'Mexico',
-    imageUrl: '$urlPrefix/06-mexico-city.jpg',
-  ),
-  ItemsList(
-    name: 'Modelos Gestión de Conocimiento 7',
-    subtitle: 'Egypt',
-    imageUrl: '$urlPrefix/07-cairo.jpg',
-  ),
-];

@@ -9,6 +9,5 @@ Future<List<CategoriesModel>> fetchCategories() async {
   for (final item in getCategoriesInfo) {
     listOfCategories.add(CategoriesModel.fromJson(item));
   }
-
   return listOfCategories;
 }

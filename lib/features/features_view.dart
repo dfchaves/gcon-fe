@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:gcon_fe/controller/features_controller.dart';
+import 'package:gcon_fe/models/features_model.dart';
 import '../utils/button_navigator.dart';
+import '../utils/item_list.dart';
 import '../utils/scroll_view_item.dart';
 
 class FeaturesView extends StatefulWidget {
@@ -12,6 +15,11 @@ class FeaturesView extends StatefulWidget {
 }
 
 class _FeaturesViewState extends State<FeaturesView> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   void dispose() {
     super.dispose();
@@ -33,7 +41,11 @@ class _FeaturesViewState extends State<FeaturesView> {
                   "https://images.unsplash.com/photo-1664575196079-9ac04582854b",
               subtitle: "",
             ),
-            const Text("Title"),
+            // Padding(padding: EdgeInsets.all(0))
+            // SizedBox(
+            //   child:
+            //       Title(color: Colors.black, child: const Text("Hello World")),
+            // ),
             const Text("Sub Title"),
             const SizedBox.square(
               child: Padding(

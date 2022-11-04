@@ -23,21 +23,27 @@ class HomeAll extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: const [
-                Text(
-                  "Gestión del Conocimiento",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
+                SizedBox(
+                  width: 300,
+                  child: Text(
+                    "Gestión del Conocimiento",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-                Text(
-                  "MGETI-15: Fraternidad Ford",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
+                SizedBox(
+                  width: 300,
+                  child: Text(
+                    "MGETI-15: Fraternidad Ford",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                    ),
                   ),
-                ),
+                )
               ],
             ),
           ),
